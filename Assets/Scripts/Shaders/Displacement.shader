@@ -1,4 +1,6 @@
-﻿Shader "GD3/Displacement"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "GD3/Displacement"
 {
 	Properties
 	{
@@ -38,7 +40,7 @@
 			{
 				v2f o;
 				// we moeten de model/vertex coordinaten omrekenen naar screen coordinaten
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
 				return o;
 			}
