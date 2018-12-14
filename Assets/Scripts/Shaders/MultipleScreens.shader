@@ -5,7 +5,7 @@ Shader "GD3/MultipleScreens"
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-		_DisplaceTex("Displacement Texture", 2D) = "white" {}
+		_ScreensMultiplier ("Screen Count", Range(0.0001,20)) = 1
 	}
 	SubShader
 	{
@@ -45,11 +45,12 @@ Shader "GD3/MultipleScreens"
 			}
 			
 			sampler2D _MainTex;
-			sampler2D _DisplaceTex;
+			float _ScreensMultiplier;
 
 			float4 frag (v2f i) : SV_Target
 			{
 				// we pakken de pixels op de plek van de uv mapping, maar dan aangepast met wat we hierboven hebben berekent
+				i.uv = i.uv * _ScreensMultiplier % 1;
 				float4 col = tex2D(_MainTex, i.uv);
 				return col;
 			}

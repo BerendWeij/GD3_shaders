@@ -1,4 +1,4 @@
-﻿Shader "GD3/SphereVolumeMaterial" {
+﻿Shader "GD3/WorldPosTransparency" {
   Properties {
     _center ("Center", Vector) = (0, 0, 0, 0)
     _size ("Size", Float) = 0
@@ -17,7 +17,7 @@
         float3 worldPos;
     };
 
-    // Distance between two points
+    // Afstand tussen 2 punten (pythagoras op 3 assen)
     float distance(float3 a, float3 b) {
       float x = (a[0] - b[0]) * (a[0] - b[0]);
       float y = (a[1] - b[1]) * (a[1] - b[1]);
@@ -25,13 +25,12 @@
       return sqrt(x + y + z);
     }
 
-    // See if a value is bounded inside 'magic volume'
-    // In this case; a sphere.
+    // functie om te checken of je binnen een bepaalde range bent
     bool bounded(float3 a) {
       return distance(a, _center) < _size;
     }
 
-    // Calculate the relative distance from the center point
+    // Bereken de afstand vanaf een bepaald center punt in de 3D wereld
     void surf (Input IN, inout SurfaceOutput o) {
       o.Alpha = 0;
       if (bounded(IN.worldPos)) {
